@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './styles.css'; // Import CSS file for styling
 
 const Login = () => {
-  const { type } = useParams();
   const [formData, setFormData] = useState({
     username: '',
-    password: ''
+    password: '',
+    role: 'user'
   });
+  const history = useHistory();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,13 +19,13 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Send login data to the server (replace dummy URL with actual endpoint)
-    axios.post(`dummy_login_${type}_url`, formData)
+  const handleLogin = () => {
+    // Send login data to the server with role parameter
+    axios.post('dummy_login_url', formData)
       .then(response => {
         console.log('Login successful:', response.data);
         // Handle successful login, e.g., redirect to dashboard
+        history.push('/dashboard');
       })
       .catch(error => {
         console.error('Error logging in:', error);
@@ -34,8 +35,8 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login as {type}</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Login</h2>
+      <form>
         <label>
           Username:
           <input type="text" name="username" value={formData.username} onChange={handleChange} />
@@ -44,7 +45,17 @@ const Login = () => {
           Password:
           <input type="password" name="password" value={formData.password} onChange={handleChange} />
         </label>
-        <button type="submit">Login</button>
+        <div className="role-selector">
+          <label>
+            <input type="radio" name="role" value="user" checked={formData.role === 'user'} onChange={handleChange} />
+            User
+          </label>
+          <label>
+            <input type="radio" name="role" value="admin" checked={formData.role === 'admin'} onChange={handleChange} />
+            Admin
+          </label>
+        </div>
+        <button type="button" onClick={handleLogin}>Login</button>
       </form>
     </div>
   );
