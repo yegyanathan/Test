@@ -13,7 +13,8 @@ const Event = () => {
     status: 'Pending Approval',
     creation_date: '',
     purged: false,
-    history: []
+    history: [],
+    participants: []
   });
 
   const handleChange = (e) => {
@@ -47,6 +48,13 @@ const Event = () => {
     });
   };
 
+  const handleSearch = (e) => {
+    const searchQuery = e.target.value;
+    // Perform search logic based on searchQuery
+    // This could involve filtering participants based on the searchQuery
+    console.log('Searching for:', searchQuery);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -68,13 +76,13 @@ const Event = () => {
             <option value="public">Public</option>
           </select>
         </label>
-        {formData.access === 'private' && (
+        {formData.event_type === 'online' && (
           <label>
             MS Teams Link:
             <input type="text" name="ms_teams_link" value={formData.ms_teams_link} onChange={handleChange} />
           </label>
         )}
-        {formData.access === 'public' && (
+        {formData.event_type === 'offline' && (
           <label>
             Location:
             <input type="text" name="location" value={formData.location} onChange={handleChange} />
@@ -96,6 +104,17 @@ const Event = () => {
         <button type="button" onClick={handleApproval}>Send for Approval</button>
         <button type="button" onClick={handleReject}>Reject</button>
       </form>
+      {formData.access === 'private' && (
+        <div>
+          <h3>Participant List</h3>
+          <input type="text" placeholder="Search participants..." onChange={handleSearch} />
+          <ul>
+            {formData.participants.map((participant, index) => (
+              <li key={index}>{participant.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div>
         <h3>Event Status History</h3>
         <ul>
