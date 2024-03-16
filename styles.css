@@ -1,68 +1,78 @@
 /* styles.css */
-.event-form {
-  width: 400px;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
 }
 
-.event-form h2 {
+.header {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.event-form label {
-  margin-bottom: 10px;
-  display: block;
+.header h1 {
+  font-size: 2.5rem;
+  color: #007bff;
 }
 
-.event-form input[type="text"],
-.event-form input[type="datetime-local"],
-.event-form textarea,
-.event-form select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.event-form textarea {
-  resize: vertical; /* Allow vertical resizing of textarea */
-}
-
-.event-form button {
-  padding: 10px;
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
   background-color: #007bff;
   color: white;
+  text-decoration: none;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.event-form button:hover {
+.button:hover {
   background-color: #0056b3;
 }
 
-.event-history {
-  margin-top: 20px;
-  padding: 10px;
+.form-container {
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  padding: 20px;
 }
 
-.event-history h3 {
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container label {
+  display: block;
   margin-bottom: 10px;
 }
 
-.event-history ul {
-  list-style: none;
-  padding: 0;
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container input[type="email"],
+.form-container select {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.event-history li {
-  margin-bottom: 5px;
+.form-container select {
+  appearance: none; /* Remove default arrow on select */
+  background: url("data:image/svg+xml,%3Csvg fill='%23333' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill-rule='evenodd' d='M14.6 5.6L10 10.2l-4.6-4.6L4 7l6 6 6-6-1.4-1.4z'/%3E%3C/svg%3E") no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 16px;
 }
+
+.form-container textarea {
+  width:
