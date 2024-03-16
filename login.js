@@ -34,29 +34,31 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form>
-        <label>
-          Username:
-          <input type="text" name="username" value={formData.username} onChange={handleChange} />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} />
-        </label>
-        <div className="role-selector">
+    <div className="container">
+      <div className="form-container">
+        <h2>Login</h2>
+        <form>
           <label>
-            <input type="radio" name="role" value="user" checked={formData.role === 'user'} onChange={handleChange} />
-            User
+            Username:
+            <input type="text" name="username" value={formData.username} onChange={handleChange} />
           </label>
           <label>
-            <input type="radio" name="role" value="admin" checked={formData.role === 'admin'} onChange={handleChange} />
-            Admin
+            Password:
+            <input type="password" name="password" value={formData.password} onChange={handleChange} />
           </label>
-        </div>
-        <button type="button" onClick={handleLogin}>Login</button>
-      </form>
+          <div className="role-selector">
+            <label>
+              <input type="radio" name="role" value="user" checked={formData.role === 'user'} onChange={handleChange} />
+              User
+            </label>
+            <label>
+              <input type="radio" name="role" value="admin" checked={formData.role === 'admin'} onChange={handleChange} />
+              Admin
+            </label>
+          </div>
+          <button type="button" onClick={handleLogin}>Login</button>
+        </form>
+      </div>
     </div>
   );
 };
