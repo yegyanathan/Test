@@ -190,3 +190,48 @@ body {
 .event-list p:first-child {
   margin-top: 0;
 }
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #FFEF00; /* Yellow */
+}
+
+h1 {
+  color: #DC143C; /* Crimson */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  width: calc(100% - 10px);
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #DC143C; /* Crimson */
+  color: #FFFFFF; /* White */
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+
+.history {
+  margin-top: 20px;
+  border-top: 2px solid #DC143C; /* Crimson */
+  padding-top: 10px;
+  /* Additional styling for history area */
+}
+
