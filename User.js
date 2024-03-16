@@ -1,70 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios for HTTP requests
+import axios from 'axios';
+import './styles.css'; // Import CSS file for styling
 
 const User = () => {
-  const [activePublicEvents, setActivePublicEvents] = useState([]);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeEvents, setActiveEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch currently active public events from the server
-    axios.get('url_to_get_active_public_events')
+    // Fetch active public events from the server
+    axios.get('dummy_active_events_url')
       .then(response => {
-        setActivePublicEvents(response.data);
+        setActiveEvents(response.data);
+        setLoading(false);
       })
       .catch(error => {
-        console.error('Error fetching active public events:', error);
+        console.error('Error fetching active events:', error);
+        setLoading(false);
       });
-  }, []); // Empty dependency array to run only once on component mount
-
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleOrganisedEvents = () => {
-    // Fetch events organised by the user (replace url_to_get_organised_events with actual URL)
-    axios.get('url_to_get_organised_events')
-      .then(response => {
-        console.log('Events organised by me:', response.data);
-        // Handle displaying events organised by the user
-      })
-      .catch(error => {
-        console.error('Error fetching organised events:', error);
-      });
-  };
-
-  const handleInvitedEvents = () => {
-    // Fetch events the user is invited for (replace url_to_get_invited_events with actual URL)
-    axios.get('url_to_get_invited_events')
-      .then(response => {
-        console.log('Events I\'m invited for:', response.data);
-        // Handle displaying events the user is invited for
-      })
-      .catch(error => {
-        console.error('Error fetching invited events:', error);
-      });
-  };
+  }, []);
 
   return (
-    <div>
-      <div className="menu">
-        <button onClick={handleMenuToggle}>&#9776;</button>
-        {menuOpen && (
-          <div className="dropdown">
-            <button onClick={handleOrganisedEvents}>Events Organised by Me</button>
-            <button onClick={handleInvitedEvents}>Events I'm Invited For</button>
-          </div>
-        )}
+    <div className="container">
+      <div className="header">
+        <h2>Active Public Events</h2>
       </div>
-      <div>
-        <h2>Currently Active Public Events</h2>
-        <ul>
-          {activePublicEvents.map(event => (
-            <li key={event.id}>
-              <strong>{event.name}</strong> - {event.description}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="event-list">
+          {activeEvents.length === 0 ? (
+            <p>No active public events available</p>
+          ) : (
+            <ul>
+              {activeEvents.map(event => (
+                <li key={event.id}>
+                  <h3>{event.title}</h3>
+                  <p>Description: {event.description}</p>
+                  <p>Start Time: {event.start_time}</p>
+                  <p>End Time: {event.end_time}</p>
+                  <p>Location: {event.location}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
   );
 };
