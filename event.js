@@ -37,15 +37,6 @@ const Event = () => {
     });
   };
 
-  const handleReject = () => {
-    const reason = prompt('Enter reason for rejection:');
-    setFormData({
-      ...formData,
-      status: 'Rejected',
-      history: [...formData.history, { status: 'Rejected', reason }]
-    });
-  };
-
   return (
     <div className="container">
       <div className="form-container">
@@ -70,6 +61,7 @@ const Event = () => {
               <label>
                 Participant List:
                 <input type="text" name="participantList" value={formData.participantList} onChange={handleChange} />
+                <button type="button">Search</button>
               </label>
             </div>
           )}
@@ -98,7 +90,6 @@ const Event = () => {
           )}
           <button type="submit">Save</button>
           <button type="button" onClick={handleApproval}>Send for Approval</button>
-          <button type="button" onClick={handleReject}>Reject</button>
         </form>
         <div className="event-history">
           <h3>Event Status History</h3>
