@@ -1,26 +1,68 @@
 /* styles.css */
-.landing-page {
+.event-form {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.event-form h2 {
   text-align: center;
-  padding: 50px;
 }
 
-.buttons-container {
-  margin-top: 30px;
+.event-form label {
+  margin-bottom: 10px;
+  display: block;
 }
 
-.button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 10px;
+.event-form input[type="text"],
+.event-form input[type="datetime-local"],
+.event-form textarea,
+.event-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.event-form textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
+}
+
+.event-form button {
+  padding: 10px;
   background-color: #007bff;
   color: white;
-  text-decoration: none;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.button:hover {
+.event-form button:hover {
   background-color: #0056b3;
+}
+
+.event-history {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.event-history h3 {
+  margin-bottom: 10px;
+}
+
+.event-history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.event-history li {
+  margin-bottom: 5px;
 }
