@@ -110,22 +110,20 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import './styles.css';
 
 const Event = () => {
   const [eventData, setEventData] = useState({
-    organiserId: '',
-    eventType: 'online',
+    organiser_id: '',
+    event_type: 'online',
     access: 'private',
     description: '',
-    startTime: '',
-    endTime: '',
+    start_time: '',
+    end_time: '',
+    ms_teams_link: '',
     location: '',
-    teamsLink: ''
+    history: []
   });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -137,83 +135,78 @@ const Event = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess(false);
-
     try {
       const response = await axios.post('/api/create-event', eventData);
       console.log("Response:", response.data);
-      setSuccess(true);
-    } catch (err) {
-      console.error("Error:", err);
-      setError('Failed to create event. Please try again.');
-    } finally {
-      setLoading(false);
+      // Handle success
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error
     }
   };
 
   const toggleFields = () => {
-    const { eventType } = eventData;
+    const { event_type } = eventData;
     const locationField = document.getElementById("locationField");
     const teamsLinkField = document.getElementById("teamsLinkField");
 
-    if (eventType === "online") {
-      locationField.style.display = "none";
-      teamsLinkField.style.display = "block";
-    } else {
+    if (event_type === "online") {
       locationField.style.display = "block";
       teamsLinkField.style.display = "none";
+    } else {
+      locationField.style.display = "none";
+      teamsLinkField.style.display = "block";
     }
   };
 
   return (
     <div className="container">
-      <h1 style={{ color: '#FF0000' }}>Create Event</h1>
+      <h1>Create Event</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="organiserId" style={{ marginBottom: '10px' }}>Organiser ID:</label>
-        <input type="text" id="organiserId" name="organiserId" value={eventData.organiserId} onChange={handleChange} required />
+        <label htmlFor="organiser_id">Organiser ID:</label>
+        <input type="text" id="organiser_id" name="organiser_id" value={eventData.organiser_id} onChange={handleChange} required />
 
-        <label htmlFor="eventType" style={{ marginBottom: '10px' }}>Event Type:</label>
-        <select id="eventType" name="eventType" value={eventData.eventType} onChange={(e) => { handleChange(e); toggleFields(); }}>
+        <label htmlFor="event_type">Event Type:</label>
+        <select id="event_type" name="event_type" value={eventData.event_type} onChange={(e) => { handleChange(e); toggleFields(); }}>
           <option value="online">Online</option>
           <option value="offline">Offline</option>
         </select>
 
-        <label htmlFor="access" style={{ marginBottom: '10px' }}>Access:</label>
+        <div id="locationField" style={{ display: eventData.event_type === "online" ? "block" : "none" }}>
+          <label htmlFor="location">Location:</label>
+          <input type="text" id="location" name="location" value={eventData.location} onChange={handleChange} />
+        </div>
+
+        <div id="teamsLinkField" style={{ display: eventData.event_type === "offline" ? "block" : "none" }}>
+          <label htmlFor="ms_teams_link">MS Teams Link:</label>
+          <input type="text" id="ms_teams_link" name="ms_teams_link" value={eventData.ms_teams_link} onChange={handleChange} />
+        </div>
+
+        <label htmlFor="access">Access:</label>
         <select id="access" name="access" value={eventData.access} onChange={handleChange}>
           <option value="private">Private</option>
           <option value="public">Public</option>
         </select>
 
-        <div id="locationField" style={{ display: eventData.eventType === "online" ? "none" : "block" }}>
-          <label htmlFor="location" style={{ marginBottom: '10px' }}>Location:</label>
-          <input type="text" id="location" name="location" value={eventData.location} onChange={handleChange} />
-        </div>
-
-        <div id="teamsLinkField" style={{ display: eventData.eventType === "online" ? "block" : "none" }}>
-          <label htmlFor="teamsLink" style={{ marginBottom: '10px' }}>MS Teams Link:</label>
-          <input type="text" id="teamsLink" name="teamsLink" value={eventData.teamsLink} onChange={handleChange} />
-        </div>
-
-        <label htmlFor="description" style={{ marginBottom: '10px' }}>Description:</label>
+        <label htmlFor="description">Description:</label>
         <textarea id="description" name="description" value={eventData.description} onChange={handleChange} required />
 
-        <label htmlFor="startTime" style={{ marginBottom: '10px' }}>Start Time:</label>
-        <input type="datetime-local" id="startTime" name="startTime" value={eventData.startTime} onChange={handleChange} required />
+        <label htmlFor="start_time">Start Time:</label>
+        <input type="datetime-local" id="start_time" name="start_time" value={eventData.start_time} onChange={handleChange} required />
 
-        <label htmlFor="endTime" style={{ marginBottom: '10px' }}>End Time:</label>
-        <input type="datetime-local" id="endTime" name="endTime" value={eventData.endTime} onChange={handleChange} required />
+        <label htmlFor="end_time">End Time:</label>
+        <input type="datetime-local" id="end_time" name="end_time" value={eventData.end_time} onChange={handleChange} required />
 
-        <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#FF0000', color: '#FFFFFF', border: 'none', cursor: 'pointer', marginTop: '10px' }} disabled={loading}>Submit</button>
+        <button type="submit">Save</button>
+        <button type="button">Send for Approval</button>
+        <button type="button">Cancel</button>
       </form>
 
-      {loading && <p>Loading...</p>}
-      {error && <div style={{ color: '#FF0000', marginTop: '10px' }}>{error}</div>}
-      {success && <div style={{ color: '#008000', marginTop: '10px' }}>Event created successfully!</div>}
+      <div className="history">
+        {/* History area to show event status history */}
+      </div>
     </div>
   );
 };
 
 export default Event;
-
