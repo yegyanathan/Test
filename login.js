@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './styles.css'; // Import CSS file for styling
 
 const Login = () => {
@@ -9,7 +9,7 @@ const Login = () => {
     password: '',
     role: 'user'
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +25,7 @@ const Login = () => {
       .then(response => {
         console.log('Login successful:', response.data);
         // Handle successful login, e.g., redirect to dashboard
-        history.push('/dashboard');
+        navigate('/dashboard');
       })
       .catch(error => {
         console.error('Error logging in:', error);
