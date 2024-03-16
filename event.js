@@ -14,7 +14,7 @@ const Event = () => {
     creation_date: '',
     purged: false,
     history: [],
-    participants: []
+    participantList: []
   });
 
   const handleChange = (e) => {
@@ -48,11 +48,16 @@ const Event = () => {
     });
   };
 
-  const handleSearch = (e) => {
-    const searchQuery = e.target.value;
-    // Perform search logic based on searchQuery
-    // This could involve filtering participants based on the searchQuery
-    console.log('Searching for:', searchQuery);
+  const handleSearch = (searchTerm) => {
+    // Perform search based on searchTerm (this is a mock example)
+    const filteredParticipants = formData.participantList.filter(participant =>
+      participant.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    // Update participant list with filtered results
+    setFormData({
+      ...formData,
+      participantList: filteredParticipants
+    });
   };
 
   return (
@@ -88,6 +93,20 @@ const Event = () => {
             <input type="text" name="location" value={formData.location} onChange={handleChange} />
           </label>
         )}
+        {formData.access === 'private' && (
+          <div>
+            <label>
+              Participant List:
+              <input type="text" onChange={(e) => handleSearch(e.target.value)} />
+              <button type="button" onClick={() => handleSearch}>Search</button>
+            </label>
+            <ul>
+              {formData.participantList.map((participant, index) => (
+                <li key={index}>{participant}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <label>
           Description:
           <textarea name="description" value={formData.description} onChange={handleChange}></textarea>
@@ -104,17 +123,6 @@ const Event = () => {
         <button type="button" onClick={handleApproval}>Send for Approval</button>
         <button type="button" onClick={handleReject}>Reject</button>
       </form>
-      {formData.access === 'private' && (
-        <div>
-          <h3>Participant List</h3>
-          <input type="text" placeholder="Search participants..." onChange={handleSearch} />
-          <ul>
-            {formData.participants.map((participant, index) => (
-              <li key={index}>{participant.name}</li>
-            ))}
-          </ul>
-        </div>
-      )}
       <div>
         <h3>Event Status History</h3>
         <ul>
