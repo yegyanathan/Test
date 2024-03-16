@@ -3,7 +3,6 @@ import './styles.css'; // Import CSS file for styling
 
 const Event = () => {
   const [formData, setFormData] = useState({
-    organiser_id: '',
     event_type: 'offline',
     access: 'private',
     description: '',
@@ -12,9 +11,9 @@ const Event = () => {
     ms_teams_link: '',
     location: '',
     status: 'Pending Approval',
-    creation_date: '',
     purged: false,
-    history: []
+    history: [],
+    participantList: []
   });
 
   const handleChange = (e) => {
@@ -53,10 +52,6 @@ const Event = () => {
         <h2>Create Event</h2>
         <form onSubmit={handleSubmit}>
           <label>
-            Organiser ID:
-            <input type="text" name="organiser_id" value={formData.organiser_id} onChange={handleChange} />
-          </label>
-          <label>
             Event Type:
             <select name="event_type" value={formData.event_type} onChange={handleChange}>
               <option value="offline">Offline</option>
@@ -71,16 +66,12 @@ const Event = () => {
             </select>
           </label>
           {formData.access === 'private' && (
-            <label>
-              MS Teams Link:
-              <input type="text" name="ms_teams_link" value={formData.ms_teams_link} onChange={handleChange} />
-            </label>
-          )}
-          {formData.access === 'public' && (
-            <label>
-              Location:
-              <input type="text" name="location" value={formData.location} onChange={handleChange} />
-            </label>
+            <div>
+              <label>
+                Participant List:
+                <input type="text" name="participantList" value={formData.participantList} onChange={handleChange} />
+              </label>
+            </div>
           )}
           <label>
             Description:
@@ -94,6 +85,17 @@ const Event = () => {
             End Time:
             <input type="datetime-local" name="end_time" value={formData.end_time} onChange={handleChange} />
           </label>
+          {formData.event_type === 'online' ? (
+            <label>
+              MS Teams Link:
+              <input type="text" name="ms_teams_link" value={formData.ms_teams_link} onChange={handleChange} />
+            </label>
+          ) : (
+            <label>
+              Location:
+              <input type="text" name="location" value={formData.location} onChange={handleChange} />
+            </label>
+          )}
           <button type="submit">Save</button>
           <button type="button" onClick={handleApproval}>Send for Approval</button>
           <button type="button" onClick={handleReject}>Reject</button>
